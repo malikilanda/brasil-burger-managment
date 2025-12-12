@@ -1,1 +1,8 @@
+com/brasilburger/models/Menu.class
+com/brasilburger/dao/BurgerDAO.class
+com/brasilburger/DatabaseConnection.class
+com/brasilburger/models/Burger.class
+com/brasilburger/models/Complement.class
 com/brasilburger/Main.class
+com/brasilburger/dao/ComplementDAO.class
+com/brasilburger/dao/MenuDAO.class
