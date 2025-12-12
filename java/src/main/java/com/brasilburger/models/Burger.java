@@ -36,6 +36,6 @@ public class Burger {
 
     @Override
     public String toString() {
-        return "Burger #" + id + ": " + name + " - " + price + "€";
+        return "Burger #" + id + ": " + name + " - " + price + " FCFA";
     }
 }
