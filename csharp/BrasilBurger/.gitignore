@@ -1,0 +1,25 @@
+# ASP.NET Core
+bin/
+obj/
+
+# Visual Studio
+.vs/
+*.user
+*.suo
+
+# Logs
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+# IDE
+.idea/
+.vs/
+
+# Build
+**/bin/
+**/obj/
+
+# Logs
+*.log
