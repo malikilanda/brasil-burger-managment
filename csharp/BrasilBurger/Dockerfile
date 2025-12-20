@@ -1,23 +1,12 @@
-# ---- Build ----
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-
-# Copie le projet et restore
 COPY . .
 RUN dotnet restore
-
-# Publish
 RUN dotnet publish -c Release -o /app/publish
 
-# ---- Run ----
-FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 WORKDIR /app
-
 COPY --from=build /app/publish .
-
-# Render expose un PORT (souvent 10000)
-ENV ASPNETCORE_URLS=http://0.0.0.0:${PORT}
-
-EXPOSE 10000
-
+ENV ASPNETCORE_URLS=http://+:80
+EXPOSE 80
 ENTRYPOINT ["dotnet", "BrasilBurger.dll"]
