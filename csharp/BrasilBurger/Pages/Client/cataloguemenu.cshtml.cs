@@ -31,7 +31,7 @@ public class CatalogueMenuModel : PageModel
                 Id = m.Id,
                 Name = m.Name,
                 Image = m.Image,
-                Price = m.price
+                Price = m.Price
             })
             .ToListAsync();
     }

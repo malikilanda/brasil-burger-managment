@@ -244,7 +244,7 @@ body{
 }
 
 .bb-home-img{
-  width: 100%;
+  width: 90%;
   height: 100%;
   min-height: 420px;
   object-fit: cover;
@@ -1483,4 +1483,280 @@ body{
   .bb-login-left{ display:none; }
   .bb-login-right{ padding: 30px 22px; }
   .bb-login-title{ font-size: 46px; }
+}
+/* ====== PAIEMENT PAGE ====== */
+.bb-paypage { background: #000; color: #fff; }
+
+.bb-pay {
+  padding: 24px 24px 40px;
+}
+
+.bb-pay-wrap{
+  min-height: 90vh;
+  display: grid;
+  grid-template-columns: 1fr 6px 1fr;
+  gap: 0;
+  align-items: center;
+}
+
+.bb-pay-left{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.bb-pay-left-inner{
+  width: 90%;
+  max-width: 520px;
+  text-align: center;
+}
+
+.bb-pay-image{
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.65));
+}
+
+.bb-pay-title{
+  margin-top: 20px;
+  font-size: 48px;
+  font-weight: 800;
+  letter-spacing: .5px;
+}
+
+.bb-pay-divider{
+  width: 4px;
+  height: 70vh;
+  background: rgba(255,255,255,.6);
+  border-radius: 6px;
+  justify-self: center;
+}
+
+.bb-pay-right{
+  width: 90%;
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.bb-pay-h2{
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 18px;
+}
+
+.bb-pay-options{
+  display:flex;
+  flex-direction:column;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.bb-pay-option input{
+  position:absolute;
+  opacity:0;
+  pointer-events:none;
+}
+
+.bb-pay-option-ui{
+  display:flex;
+  align-items:center;
+  gap: 14px;
+  border: 2px solid #f4d84a;
+  border-radius: 10px;
+  padding: 14px 14px;
+  background: rgba(0,0,0,.6);
+}
+
+.bb-pay-logo{
+  width: 46px;
+  height: 34px;
+  border-radius: 4px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight: 800;
+  font-size: 12px;
+  color: #000;
+}
+
+.bb-logo-maxit{ background:#ff8a00; }
+.bb-logo-wave { background:#60d7ff; }
+.bb-logo-cash { background:#79e08a; font-size:18px; }
+
+.bb-pay-name{
+  flex:1;
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,.75);
+}
+
+.bb-pay-radio{
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,.8);
+  position: relative;
+}
+
+.bb-pay-option input:checked + .bb-pay-option-ui .bb-pay-radio::after{
+  content:"";
+  position:absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.bb-pay-bill{
+  margin-top: 22px;
+}
+
+.bb-pay-bill-title{
+  font-weight: 700;
+  margin-bottom: 10px;
+  font-size: 18px;
+}
+
+.bb-pay-row{
+  display:flex;
+  justify-content:space-between;
+  color: rgba(255,255,255,.75);
+  font-size: 18px;
+  margin: 4px 0;
+}
+
+.bb-pay-total{
+  margin-top: 8px;
+  font-weight: 800;
+  color: #fff;
+}
+
+.bb-pay-btn{
+  margin-top: 28px;
+  width: 100%;
+  border: 2px solid #f4d84a;
+  background: rgba(0,0,0,.7);
+  color: #fff;
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* mobile */
+@media (max-width: 992px){
+  .bb-pay-wrap{
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .bb-pay-divider{ display:none; }
+  .bb-pay-title{ font-size: 36px; }
+}
+.bb-pay-logo-img{
+  width:46px;
+  height:34px;
+  border-radius:6px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#111;
+}
+
+.bb-pay-logo-img img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+/* ====== MES COMMANDES ====== */
+.bb-orderspage { background:#000; color:#fff; }
+
+.bb-orders-wrap{
+  margin-top: 30px;
+  padding: 20px 10px 40px;
+}
+
+.bb-orders-title{
+  font-size: 34px;
+  font-weight: 500;
+  margin: 10px 0 18px 30px;
+  opacity: .95;
+}
+
+.bb-orders-table{
+  width: 85%;
+  max-width: 980px;
+  margin-left: 30px;
+  border: 3px solid #f4d84a;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.bb-orders-head{
+  display:grid;
+  grid-template-columns: 1.2fr .9fr .9fr 1fr;
+  background: rgba(0,0,0,.55);
+  padding: 16px 18px;
+  border-bottom: 3px solid #f4d84a;
+  font-size: 18px;
+}
+
+.bb-orders-row{
+  display:grid;
+  grid-template-columns: 1.2fr .9fr .9fr 1fr;
+  background: rgba(255,255,255,.22);
+  padding: 18px 18px;
+  border-bottom: 3px solid #f4d84a;
+  font-size: 18px;
+}
+
+.bb-orders-row:last-child{ border-bottom: none; }
+
+.bb-green{
+  color: #56ff3b;
+  font-weight: 500;
+}
+
+/* responsive */
+@media (max-width: 992px){
+  .bb-orders-title{ margin-left: 12px; }
+  .bb-orders-table{ width: 95%; margin-left: 12px; }
+  .bb-orders-head, .bb-orders-row{
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+.bb-nav-account {
+    position: relative;
+}
+
+.bb-account-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #1a1a1a;
+    border: 2px solid #f5d94c;
+    border-radius: 8px;
+    min-width: 160px;
+    display: none;
+    flex-direction: column;
+    z-index: 999;
+}
+
+.bb-account-dropdown a {
+    padding: 10px 14px;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.bb-account-dropdown a:hover {
+    background: #f5d94c;
+    color: black;
+}
+
+.bb-nav-account:hover .bb-account-dropdown {
+    display: flex;
 }

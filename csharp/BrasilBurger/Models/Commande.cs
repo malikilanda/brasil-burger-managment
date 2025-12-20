@@ -10,3 +10,10 @@ public class Commande
     public decimal? TotalAmount { get; set; }
     public DateTime CreatedAt { get; set; }
 }
+public static class CommandeStatus
+{
+    public const string EN_COURS = "EN_COURS";
+    public const string VALIDEE = "VALIDEE";
+    public const string TERMINEE = "TERMINEE";
+    public const string ANNULEE = "ANNULEE";
+}

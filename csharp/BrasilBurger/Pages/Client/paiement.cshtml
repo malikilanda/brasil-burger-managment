@@ -1,0 +1,122 @@
+@page
+@model BrasilBurger.Pages.Client.PaiementModel
+@{
+    Layout = null;
+    var backUrl = "/Client/Panier";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brasil Burger - Paiement</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<body class="bb-home bb-paypage">
+
+    <a href="@backUrl" class="bb-back-btn">Retour</a>
+
+    <main class="bb-pay container-fluid">
+        <div class="bb-pay-wrap">
+
+            <!-- LEFT -->
+            <section class="bb-pay-left">
+                <div class="bb-pay-left-inner">
+                    <img src="@Model.LeftImage" class="bb-pay-image" alt="Produit" />
+                    <h1 class="bb-pay-title">@Model.LeftTitle</h1>
+                </div>
+            </section>
+
+            <!-- DIVIDER -->
+            <div class="bb-pay-divider"></div>
+
+            <!-- RIGHT -->
+            <section class="bb-pay-right">
+
+                <h2 class="bb-pay-h2">Paiement</h2>
+
+                @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+                {
+                    <div class="alert alert-danger p-2 mt-3">@Model.ErrorMessage</div>
+                }
+
+                <form method="post" asp-page-handler="Pay" class="bb-pay-form">
+
+                    <!-- OPTIONS -->
+                    <div class="bb-pay-options">
+
+                        <label class="bb-pay-option">
+                            <input type="radio" name="PaymentMethod" value="MAXIT" @(Model.PaymentMethod == "MAXIT" ?
+                                                                                                                   "checked" : "") />
+                            <span class="bb-pay-option-ui">
+                                <span class="bb-pay-logo-img">
+                                    <img src="~/images/maxit.png" alt="Max it" />
+                                </span>
+                                    <span class="bb-pay-name">MAX IT</span>
+                                <span class="bb-pay-radio"></span>
+                            </span>
+                        </label>
+
+                        <label class="bb-pay-option">
+                            <input type="radio" name="PaymentMethod" value="WAVE" @(Model.PaymentMethod == "WAVE" ?
+                                                                                                                  "checked" : "") />
+                            <span class="bb-pay-option-ui">
+                                <span class="bb-pay-logo-img">
+                                    <img src="~/images/wave.png" alt="Wave" />
+                                </span>
+                                    <span class="bb-pay-name">WAVE</span>
+                                <span class="bb-pay-radio"></span>
+                            </span>
+                        </label>
+
+                        <label class="bb-pay-option">
+                            <input type="radio" name="PaymentMethod" value="ESPECES" @(Model.PaymentMethod == "ESPECES" ? "checked" : "") />
+                            <span class="bb-pay-option-ui">
+                                <span class="bb-pay-logo bb-logo-cash">💵</span>
+                                <span class="bb-pay-name">ESPECES</span>
+                                <span class="bb-pay-radio"></span>
+                            </span>
+                        </label>
+
+                    </div>
+
+                    <!-- FACTURATION -->
+                    <div class="bb-pay-bill">
+                        <div class="bb-pay-bill-title">Facturation</div>
+
+                        <div class="bb-pay-row">
+                            <span>sous-total</span>
+                            <span>@Model.SubTotal.ToString("0.00") FCFA</span>
+                        </div>
+
+                        <div class="bb-pay-row">
+                            <span>Livraison</span>
+                            <span>@Model.DeliveryFee.ToString("0.00") FCFA</span>
+                        </div>
+
+                        <div class="bb-pay-row bb-pay-total">
+                            <span>Total net</span>
+                            <span>@Model.TotalNet.ToString("0.00") FCFA</span>
+                        </div>
+                    </div>
+
+                    <!-- BUTTON -->
+                    <button class="bb-pay-btn" type="submit">
+                        Payer maintenant
+                    </button>
+                </form>
+
+            </section>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

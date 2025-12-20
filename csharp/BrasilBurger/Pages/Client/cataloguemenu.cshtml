@@ -27,13 +27,33 @@
         <div class="min-vh-100 bb-page">
 
             <header class="bb-nav px-4 px-lg-5 pt-4">
-                <nav class="d-flex justify-content-end gap-4 gap-lg-5 flex-wrap">
-                    <a class="bb-nav-link" href="/Client/Acceuil">Acceuil</a>
-                    <a class="bb-nav-link active" href="/Client/CatalogueBurger">Catalogue</a>
-                    <a class="bb-nav-link" href="/Client/Panier">Panier</a>
-                    <a class="bb-nav-link" href="/Client/MesCommandes">Commandes</a>
+                <nav class="d-flex justify-content-end gap-4 gap-lg-5 align-items-center">
+
+                    <a class="bb-nav-link" href="/Client/acceuil">Acceuil</a>
+                    <a class="bb-nav-link active" href="/Client/catalogueburger">Catalogue</a>
+                    <a class="bb-nav-link" href="/Client/panier">Panier</a>
+                    <a class="bb-nav-link" href="/Client/mescommandes">Commandes</a>
+
+                    <!-- MENU COMPTE -->
+                    <div class="bb-nav-account">
+                        <span class="bb-nav-link">Compte ▾</span>
+
+                        <div class="bb-account-dropdown">
+                            @if (User.Identity?.IsAuthenticated == true)
+                            {
+                                <a href="/Logout">Déconnexion</a>
+                            }
+                            else
+                            {
+                                <a href="/Index">Connexion</a>
+                                <a href="/Register">Inscription</a>
+                            }
+                        </div>
+                    </div>
+
                 </nav>
             </header>
+
 
             <section class="px-4 px-lg-5 mt-4">
                 <div class="bb-tabs d-flex gap-3 flex-wrap">
@@ -52,8 +72,8 @@
                             <div class="bb-card h-100">
                                 <div class="bb-card-img">
                                     <img src="@(string.IsNullOrWhiteSpace(m.Image)
-                                                 ? Url.Content("~/images/menu.png")
-                                                 : Url.Content("~/" + m.Image))" alt="@m.Name" />
+                                                                                          ? Url.Content("~/images/menu.png")
+                                                                                          : Url.Content("~/" + m.Image))" alt="@m.Name" />
                                 </div>
 
 

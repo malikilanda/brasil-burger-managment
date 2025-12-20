@@ -17,8 +17,8 @@ public class CatalogueBurgerModel : PageModel
     public async Task OnGet()
     {
         Items = await _db.Burgers
-            .Where(x => !x.Archived)
-            .OrderBy(x => x.Id)
+            .Where(b => !b.Archived)
+            .OrderBy(b => b.Id)
             .ToListAsync();
     }
 }

@@ -6,6 +6,7 @@
 
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -17,7 +18,8 @@
     <!-- Polices (comme ton HTML) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Hanken+Grotesk:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Itim&family=Hanken+Grotesk:wght@400;700&display=swap"
+        rel="stylesheet">
 
     <!-- CSS perso (Razor) -->
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
@@ -38,13 +40,33 @@
 
                 <!-- Navbar -->
                 <header class="bb-nav px-4 px-lg-5 pt-4">
-                    <nav class="d-flex justify-content-end gap-4 gap-lg-5">
+                    <nav class="d-flex justify-content-end gap-4 gap-lg-5 align-items-center">
+
                         <a class="bb-nav-link active" href="/Client/acceuil">Acceuil</a>
                         <a class="bb-nav-link" href="/Client/catalogueburger">Catalogue</a>
                         <a class="bb-nav-link" href="/Client/panier">Panier</a>
                         <a class="bb-nav-link" href="/Client/mescommandes">Commandes</a>
+
+                        <!-- MENU COMPTE -->
+                        <div class="bb-nav-account">
+                            <span class="bb-nav-link">Compte ▾</span>
+
+                            <div class="bb-account-dropdown">
+                                @if (User.Identity?.IsAuthenticated == true)
+                                {
+                                    <a href="/Logout">Déconnexion</a>
+                                }
+                                else
+                                {
+                                    <a href="/Index">Connexion</a>
+                                    <a href="/Register">Inscription</a>
+                                }
+                            </div>
+                        </div>
+
                     </nav>
                 </header>
+
 
                 <!-- Hero -->
                 <section class="bb-hero px-4 px-lg-5 d-flex flex-column justify-content-center flex-grow-1">
@@ -70,4 +92,5 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
 </html>

@@ -11,13 +11,13 @@ public class AppDbContext : DbContext
     public DbSet<Burger> Burgers => Set<Burger>();
     public DbSet<Complement> Complements => Set<Complement>();
     public DbSet<Menu> Menus => Set<Menu>();
+    public DbSet<MenuComposition> MenuCompositions => Set<MenuComposition>();
 
     public DbSet<Commande> Commandes => Set<Commande>();
     public DbSet<CommandeBurger> CommandeBurgers => Set<CommandeBurger>();
     public DbSet<CommandeMenu> CommandeMenus => Set<CommandeMenu>();
     public DbSet<CommandeComplement> CommandeComplements => Set<CommandeComplement>();
-    
-    
+
     protected override void OnModelCreating(ModelBuilder mb)
     {
         base.OnModelCreating(mb);
@@ -67,7 +67,28 @@ public class AppDbContext : DbContext
             e.Property(x => x.Name).HasColumnName("name");
             e.Property(x => x.Image).HasColumnName("image");
             e.Property(x => x.Archived).HasColumnName("archived");
+            e.Property(x => x.Price).HasColumnName("price");
         });
+
+mb.Entity<MenuComposition>(e =>
+{
+    e.ToTable("menu_composition");
+    e.HasKey(x => x.Id);
+
+    e.Property(x => x.Id).HasColumnName("id");
+    e.Property(x => x.MenuId).HasColumnName("menu_id");
+    e.Property(x => x.BurgerId).HasColumnName("burger_id");
+    e.Property(x => x.BoissonId).HasColumnName("boisson_id");
+    e.Property(x => x.FritesId).HasColumnName("frites_id");
+
+    // relations (optionnelles mais bien)
+    e.HasOne(x => x.Menu).WithMany().HasForeignKey(x => x.MenuId);
+    e.HasOne(x => x.Burger).WithMany().HasForeignKey(x => x.BurgerId);
+    e.HasOne(x => x.Boisson).WithMany().HasForeignKey(x => x.BoissonId);
+    e.HasOne(x => x.Frites).WithMany().HasForeignKey(x => x.FritesId);
+});
+
+
 
         mb.Entity<Commande>(e =>
         {
