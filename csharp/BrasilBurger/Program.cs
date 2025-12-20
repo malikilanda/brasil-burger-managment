@@ -1,28 +1,52 @@
 using BrasilBurger.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Npgsql;
+using NpgsqlTypes;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
 
-// ✅ Auth Cookie
-builder.Services
-    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+// ✅ Connection string (Render-friendly)
+string? cs = builder.Configuration.GetConnectionString("DefaultConnection");
+
+if (string.IsNullOrWhiteSpace(cs))
+{
+    var databaseUrl = Environment.GetEnvironmentVariable("DATABASE_URL");
+    if (!string.IsNullOrWhiteSpace(databaseUrl))
+    {
+        var uri = new Uri(databaseUrl);
+        var userInfo = uri.UserInfo.Split(':', 2);
+
+        var npg = new NpgsqlConnectionStringBuilder
+        {
+            Host = uri.Host,
+            Port = uri.Port,
+            Username = userInfo[0],
+            Password = userInfo.Length > 1 ? userInfo[1] : "",
+            Database = uri.AbsolutePath.TrimStart('/'),
+            SslMode = SslMode.Require,
+            TrustServerCertificate = true
+        };
+
+        cs = npg.ConnectionString;
+    }
+}
+
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(cs)
+);
+
+// Auth cookie
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
-        options.LoginPath = "/";          // ta page login (Index)
-        options.AccessDeniedPath = "/Logout";   // si pas autorisé
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-        options.SlidingExpiration = false; // comme tu veux: true/false
+        options.LoginPath = "/";
+        options.AccessDeniedPath = "/";
     });
 
 builder.Services.AddAuthorization();
-
-// ✅ DB
-builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"))
-);
 
 var app = builder.Build();
 
@@ -37,10 +61,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-// ✅ IMPORTANT: Auth avant MapRazorPages
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapRazorPages();
-
 app.Run();
