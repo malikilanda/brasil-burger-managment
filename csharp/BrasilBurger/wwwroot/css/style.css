@@ -1,0 +1,1486 @@
+:root{
+  --bb-bg: #000;
+  --bb-olive: #7a6a22;      /* champ olive */
+  --bb-olive-text: #d9d2b2; /* texte placeholder */
+  --bb-yellow: #f6d44a;     /* bouton */
+  --bb-white: #ffffff;
+  --bb-gray: rgba(255,255,255,.55);
+}
+
+*{ box-sizing: border-box; }
+
+body{
+  background: var(--bb-bg);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+/* Centre la maquette comme sur la capture */
+.bb-wrap{
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+/* Zone principale (écran) */
+.bb-mockup{
+  width: min(1220px, 96vw);
+  aspect-ratio: 16 / 9;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.bb-mockup--frame{
+  padding: 48px;
+  background: url("images/laptop-frame.png") no-repeat center/contain;
+}
+.bb-screen{
+  width: 100%;
+  height: 100%;
+  background: transparent;
+}
+
+/* Col gauche */
+.bb-left{
+  height: 100%;
+}
+
+.bb-burger{
+  max-height: 200%;
+  max-width: 200%;
+  transform: translateX(-30%); /* burger un peu vers la gauche comme sur la capture */
+}
+
+/* Col droite */
+.bb-right{
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-right-inner{
+  width: min(520px, 92%);
+  transform: translateX(2%);
+}
+
+/* Titre */
+.bb-title{
+  font-family: "Luckiest Guy", cursive;
+  color: var(--bb-white);
+  letter-spacing: 2px;
+  font-size: clamp(34px, 4vw, 52px);
+  margin-bottom: 18px;
+}
+
+/* “pas de compte? inscrit toi” */
+.bb-signup{
+  color: var(--bb-gray);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+.bb-link{
+  color: var(--bb-white);
+  font-weight: 700;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.bb-link:hover{ text-decoration: underline; }
+
+/* Inputs */
+.bb-input{
+  background: var(--bb-olive);
+  border: 3px solid var(--bb-white);
+  border-radius: 16px;
+  padding: 16px 18px;
+  font-size: 18px;
+  color: var(--bb-white);
+}
+
+.bb-input::placeholder{
+  color: var(--bb-olive-text);
+  opacity: 1;
+  text-transform: lowercase;
+}
+
+.bb-input:focus{
+  background: var(--bb-olive);
+  color: var(--bb-white);
+  border-color: var(--bb-white);
+  box-shadow: 0 0 0 .2rem rgba(246, 212, 74, .18);
+}
+
+/* Forgot */
+.bb-forgot-link{
+  color: var(--bb-gray);
+  text-decoration: none;
+  font-size: 16px;
+}
+.bb-forgot-link:hover{ text-decoration: underline; }
+
+/* OR + traits */
+.bb-or{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+}
+
+.bb-or-line{
+  width: 86px;
+  height: 3px;
+  background: var(--bb-white);
+  border-radius: 2px;
+  opacity: .9;
+}
+
+.bb-or-text{
+  color: var(--bb-white);
+  font-size: 16px;
+  letter-spacing: 1px;
+}
+
+/* Social icons */
+.bb-social-btn{
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-social-btn i{
+  font-size: 30px;
+}
+
+.bb-social-btn .fa-google{
+  background: conic-gradient(#ea4335 0 25%, #fbbc05 25% 50%, #34a853 50% 75%, #4285f4 75% 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bb-social-btn .fa-facebook-f{
+  color: #1877f2;
+  font-size: 30px;
+}
+
+.bb-yahoo{
+  display: inline-flex;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  background: #5f1ebd;
+  color: #fff;
+  font-weight: 800;
+  font-size: 18px;
+  font-family: "Poppins", sans-serif;
+}
+
+/* Bouton */
+.bb-btn{
+  width: min(560px, 100%);
+  height: 60px;
+  border-radius: 999px;
+  border: 3px solid var(--bb-white);
+  background: var(--bb-yellow);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.bb-btn:hover{
+  filter: brightness(.96);
+}
+
+/* Mobile : empilement propre */
+@media (max-width: 767.98px){
+  .bb-mockup{
+    aspect-ratio: auto;
+    width: min(620px, 96vw);
+  }
+  .bb-mockup--frame{
+    padding: 26px;
+    background: none; /* sur mobile on enlève le laptop */
+  }
+  .bb-burger{
+    transform: none;
+    max-height: 320px;
+  }
+  .bb-right-inner{
+    transform: none;
+    margin-top: 14px;
+    margin-bottom: 14px;
+  }
+}
+/* ===========================
+   PAGE ACCUEIL (client-acceuil)
+   Compatible avec le style précédent (login)
+   =========================== */
+
+.bb-home{
+  background: var(--bb-bg);
+  color: var(--bb-white);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+.bb-home .container-fluid,
+.bb-home .row{
+  background: transparent;
+}
+
+/* Colonne gauche : image burger */
+.bb-home-left{
+  background: var(--bb-bg);
+}
+
+.bb-home-img{
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Colonne droite : contenu */
+.bb-home-right{
+  background: var(--bb-bg);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Menu top (même blanc que le login) */
+.bb-nav{
+  padding-top: 18px;
+}
+
+.bb-nav-link{
+  color: var(--bb-white);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 24px;
+  opacity: .95;
+}
+
+.bb-nav-link:hover{
+  text-decoration: underline;
+}
+
+.bb-nav-link.active{
+  border-bottom: 2px solid rgba(255,255,255,.75);
+  padding-bottom: 2px;
+}
+
+/* Zone texte centrée (comme ton rendu export) */
+.bb-hero{
+  padding-bottom: 40px;
+}
+
+/* Titre accueil : on réutilise la vibe du titre (mais en Itim si dispo) */
+.bb-home .bb-title{
+  font-family: "Itim", "Poppins", sans-serif;
+  font-size: clamp(44px, 4.2vw, 64px);
+  color: var(--bb-white);
+  margin-bottom: 14px;
+}
+
+/* Description */
+.bb-desc{
+  font-size: 24px;
+  line-height: 1.35;
+  max-width: 560px;
+  color: var(--bb-white);
+  opacity: .95;
+}
+
+/* Bouton : même style que le bouton login (pill + bord blanc) */
+.bb-btn-pill{
+  background: var(--bb-yellow);
+  border: 3px solid var(--bb-white);
+  border-radius: 66px;
+  color: var(--bb-white);
+  font-weight: 700;
+  font-size: 24px;
+  padding: 12px 34px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-btn-pill:hover{
+  filter: brightness(.96);
+  color: var(--bb-white);
+}
+
+/* Responsive */
+@media (max-width: 991.98px){
+  .bb-nav-link{ font-size: 18px; }
+  .bb-desc{ font-size: 18px; }
+  .bb-btn-pill{ font-size: 18px; padding: 10px 26px; }
+}
+/* ===========================
+   CATALOGUE
+   =========================== */
+
+.bb-catalogue .bb-page{
+  background: var(--bb-bg);
+}
+
+/* Onglets catégories (Burger/Frites/boisson/menu) */
+.bb-tabs{
+  margin-top: 10px;
+}
+
+.bb-tab{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 22px;
+  border-radius: 999px;
+  border: 3px solid rgba(255,255,255,.85);
+  color: var(--bb-white);
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 18px;
+  background: transparent;
+}
+
+.bb-tab:hover{
+  text-decoration: none;
+  filter: brightness(.95);
+}
+
+.bb-tab.active{
+  background:#fbbc05;
+  border-color: var(--bb-white);
+}
+
+/* Carte burger */
+.bb-card{
+  border: 3px solid rgba(255,255,255,.65);
+  border-radius: 20px;
+  background: rgba(255,255,255,.04);
+  overflow: hidden;
+  position: relative;
+  padding: 18px 18px 62px; /* espace pour le bouton + */
+}
+
+.bb-card-img{
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-card-img img{
+  max-width: 92%;
+  max-height: 92%;
+  object-fit: contain;
+}
+
+/* Texte carte */
+.bb-card-title{
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0;
+  color: var(--bb-white);
+}
+
+.bb-card-price{
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--bb-white);
+  opacity: .95;
+  white-space: nowrap;
+}
+
+.bb-card-desc{
+  margin: 10px 0 0;
+  font-size: 16px;
+  color: rgba(255,255,255,.9);
+  line-height: 1.25;
+}
+
+/* Bouton + */
+.bb-card-footer{
+  position: absolute;
+  right: 16px;
+  bottom: 14px;
+}
+
+.bb-add{
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  border: 3px solid var(--bb-white);
+  background: var(--bb-yellow);
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: 26px;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-add:hover{
+  filter: brightness(.95);
+}
+/* ===========================
+   CATALOGUE MENU (spécifique)
+   =========================== */
+
+.bb-catalogue-menu .bb-menu-desc{
+  font-size: 18px;
+  line-height: 1.25;
+}
+
+/* Option : si tu veux une petite différence visuelle pour les menus */
+.bb-catalogue-menu .bb-card{
+  background: rgba(255,255,255,.05);
+}
+/* ===========================
+   DETAILS BURGER
+   =========================== */
+
+.bb-details .bb-page{
+  background: var(--bb-bg);
+}
+
+/* Carte image */
+.bb-details-card{
+  border: 3px solid rgba(255,255,255,.65);
+  border-radius: 22px;
+  background: rgba(255,255,255,.03);
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bb-details-img{
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* Titre + desc */
+.bb-details-title{
+  color: var(--bb-white);
+  font-weight: 800;
+  font-size: clamp(28px, 3vw, 40px);
+}
+
+.bb-details-desc{
+  color: rgba(255,255,255,.92);
+  font-size: 18px;
+  line-height: 1.35;
+  max-width: 640px;
+}
+
+.bb-details-subtitle{
+  color: var(--bb-white);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* HR (ligne) */
+.bb-hr{
+  border: 0;
+  border-top: 3px solid rgba(255,255,255,.35);
+  opacity: 1;
+}
+
+/* Chip "menu" */
+.bb-chip{
+  border: 3px solid rgba(255,255,255,.75);
+  color: var(--bb-white);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-weight: 700;
+  font-size: 14px;
+  background: rgba(255,255,255,.06);
+}
+
+/* Bouton principal pleine largeur */
+.bb-btn-full{
+  width: min(560px, 100%);
+}
+
+/* Choix livraison/sur place/emporter */
+.bb-pickup{
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.bb-option{
+  cursor: pointer;
+  display: inline-flex;
+}
+
+.bb-option input{
+  display: none;
+}
+
+.bb-option-ui{
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  border: 3px solid rgba(255,255,255,.75);
+  border-radius: 18px;
+  padding: 12px 16px;
+  color: var(--bb-white);
+  background: rgba(255,255,255,.04);
+  font-weight: 700;
+  text-transform: lowercase;
+}
+
+.bb-option-check{
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid rgba(255,255,255,.75);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  opacity: 0;
+  transform: scale(.9);
+  transition: .15s ease;
+}
+
+/* Quand sélectionné */
+.bb-option input:checked + .bb-option-ui{
+  border-color: var(--bb-white);
+  background: rgba(255,255,255,.08);
+}
+
+.bb-option input:checked + .bb-option-ui .bb-option-check{
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Responsive */
+@media (max-width: 991.98px){
+  .bb-details-card{ padding: 14px; }
+  .bb-details-desc{ font-size: 16px; }
+}
+/* ===========================
+   DETAILS BURGER (MAQUETTE PC)
+   =========================== */
+
+.bb-detailspage{
+  background: var(--bb-bg);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+.bb-mock{
+  width: min(1200px, 96vw);
+  margin: 0 auto;
+  padding: 22px 18px 40px;
+}
+
+/* NAV */
+.bb-details-nav{
+  margin-top: 8px;
+}
+
+/* BURGER TOP */
+.bb-details-hero{
+  display: flex;
+  justify-content: center;
+  margin-top: 2px;
+  margin-bottom: -120px; /* le burger entre dans le panneau jaune */
+  position: relative;
+  z-index: 3;
+}
+
+.bb-details-burger{
+  width: min(360px, 80%);
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
+
+/* PANNEAU JAUNE */
+.bb-details-panel{
+  background: var(--bb-yellow);
+  border-radius: 220px 220px 0 0; /* gros arrondi haut */
+  padding: 70px 34px 26px;
+  position: relative;
+  z-index: 2;
+  min-height: 520px;
+}
+
+.bb-details-title{
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 10px;
+}
+
+.bb-details-desc{
+  color: #000;
+  font-size: 18px;
+  line-height: 1.35;
+  max-width: 980px;
+  margin-bottom: 34px;
+}
+
+/* OPTIONS (Livraison / sur place / emporter) */
+.bb-details-modes{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 26px;
+}
+
+.bb-mode{
+  width: 220px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bb-mode input{ display: none; }
+
+.bb-mode-ui{
+  width: 180px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.25);
+  border: 3px solid rgba(255,255,255,.90);
+  padding: 14px 12px 10px;
+  text-align: center;
+}
+
+.bb-mode-pill{
+  width: 92px;
+  height: 42px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.85);
+  border: 3px solid rgba(255,255,255,.95);
+  display: grid;
+  place-items: center;
+  margin: -34px auto 8px;
+}
+
+.bb-mode-icon{
+  font-weight: 900;
+  font-size: 22px;
+  color: #000;
+}
+
+.bb-mode-label{
+  font-weight: 700;
+  color: #000;
+  text-transform: lowercase;
+  font-size: 18px;
+}
+
+.bb-mode input:checked + .bb-mode-ui{
+  background: rgba(255,255,255,.35);
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+/* BARRE DU BAS */
+.bb-details-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+/* Quantité */
+.bb-qty{
+  display: inline-flex;
+  align-items: center;
+  border: 3px solid rgba(255,255,255,.9);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,.35);
+  height: 56px;
+}
+
+.bb-qty-btn{
+  width: 54px;
+  height: 56px;
+  border: 0;
+  background: rgba(255,255,255,.55);
+  font-size: 30px;
+  font-weight: 900;
+  color: #000;
+}
+
+.bb-qty-val{
+  width: 78px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 22px;
+  color: #000;
+  background: rgba(255,255,255,.20);
+}
+
+/* Bouton Ajouter */
+.bb-add-big{
+  flex: 1;
+  min-width: 320px;
+  height: 56px;
+  border-radius: 10px;
+  border: 3px solid rgba(255,255,255,.9);
+  background: rgba(255,255,255,.35);
+  color: #000;
+  font-weight: 900;
+  font-size: 28px;
+}
+
+/* Zone menu + switch */
+.bb-menu-toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bb-menu-label{
+  font-weight: 900;
+  font-size: 28px;
+  color: #000;
+  text-transform: lowercase;
+}
+
+/* Switch */
+.bb-switch{
+  position: relative;
+  width: 62px;
+  height: 36px;
+  display: inline-block;
+}
+
+.bb-switch input{ display:none; }
+
+.bb-slider{
+  position:absolute;
+  inset:0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.45);
+  border: 3px solid rgba(255,255,255,.95);
+  transition:.15s ease;
+}
+
+.bb-slider:after{
+  content:"";
+  width: 26px;
+  height: 26px;
+  background:#fff;
+  border-radius: 50%;
+  position:absolute;
+  top:50%;
+  left:7px;
+  transform: translateY(-50%);
+  transition:.15s ease;
+}
+
+.bb-switch input:checked + .bb-slider{
+  background: rgba(255,255,255,.70);
+}
+
+.bb-switch input:checked + .bb-slider:after{
+  left: 29px;
+}
+
+/* Info pack */
+.bb-pack{
+  margin-top: 12px;
+  color:#000;
+  font-weight: 700;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 991.98px){
+  .bb-details-panel{
+    border-radius: 70px 70px 0 0;
+    padding: 64px 18px 20px;
+  }
+  .bb-add-big{ font-size: 22px; }
+  .bb-menu-label{ font-size: 22px; }
+}
+/* ===========================
+   DETAILS BURGER (avec menu calculé + extras)
+   =========================== */
+
+.bb-detailspage{
+  background: var(--bb-bg);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+.bb-mock{
+  width: min(1200px, 96vw);
+  margin: 0 auto;
+  padding: 22px 18px 40px;
+}
+
+.bb-details-nav{
+  margin-top: 8px;
+}
+
+/* Burger top */
+.bb-details-hero{
+  display: flex;
+  justify-content: center;
+  margin-top: 26px;
+  margin-bottom: -150px;
+  position: relative;
+  z-index: 3;
+}
+
+.bb-details-burger{
+  width: min(360px, 80%);
+  height: auto;
+  filter: drop-shadow(0 10px 20px rgba(0,0,0,.35));
+}
+
+/* Panel jaune */
+.bb-details-panel{
+  background: var(--bb-yellow);
+  border-radius: 220px 220px 0 0;
+  padding: 70px 34px 26px;
+  position: relative;
+  z-index: 2;
+  min-height: 560px;
+}
+
+.bb-details-title{
+  font-size: clamp(28px, 3.4vw, 44px);
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 20px;
+  margin-left: 20px;
+}
+
+.bb-details-desc{
+  color: #000;
+  font-size: 18px;
+  line-height: 1.35;
+  max-width: 980px;
+  margin-bottom: 22px;
+  margin-left: 20px;
+}
+
+/* modes */
+.bb-details-modes{
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
+}
+
+.bb-mode{
+  width: 220px;
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.bb-mode input{ display:none; }
+
+.bb-mode-ui{
+  width: 180px;
+  border-radius: 16px;
+  background: rgba(255,255,255,.25);
+  border: 3px solid rgba(255,255,255,.90);
+  padding: 14px 12px 10px;
+  text-align: center;
+}
+
+.bb-mode-pill{
+  width: 92px;
+  height: 42px;
+  border-radius: 999px;
+  background: rgba(255,255,255,.85);
+  border: 3px solid rgba(255,255,255,.95);
+  display: grid;
+  place-items: center;
+  margin: -34px auto 8px;
+}
+
+.bb-mode-icon{
+  font-weight: 900;
+  font-size: 22px;
+  color: #000;
+}
+
+.bb-mode-label{
+  font-weight: 700;
+  color: #000;
+  text-transform: lowercase;
+  font-size: 18px;
+}
+
+.bb-mode input:checked + .bb-mode-ui{
+  background: rgba(255,255,255,.35);
+  box-shadow: 0 10px 25px rgba(0,0,0,.08);
+}
+
+/* Extras (Frites / Boisson) */
+.bb-extras{
+  margin-top: 12px;
+}
+
+.bb-extra-label{
+  display: block;
+  font-weight: 800;
+  color: #000;
+  margin-bottom: 6px;
+}
+
+.bb-extra-select{
+  width: 100%;
+  height: 54px;
+  border-radius: 12px;
+  border: 3px solid rgba(255,255,255,.9);
+  background: rgba(255,255,255,.35);
+  color: #000;
+  font-weight: 700;
+  padding: 0 14px;
+  outline: none;
+}
+
+/* Résumé */
+.bb-summary{
+  background: rgba(255,255,255,.25);
+  border: 3px solid rgba(255,255,255,.9);
+  border-radius: 14px;
+  padding: 12px 14px;
+  color: #000;
+  font-weight: 800;
+}
+
+.bb-warn{
+  background: rgba(0,0,0,.08);
+  border: 2px dashed rgba(0,0,0,.35);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-weight: 800;
+}
+
+/* Bottom bar */
+.bb-details-bottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+/* Quantité */
+.bb-qty{
+  display: inline-flex;
+  align-items: center;
+  border: 3px solid rgba(255,255,255,.9);
+  border-radius: 10px;
+  overflow: hidden;
+  background: rgba(255,255,255,.35);
+  height: 56px;
+}
+
+.bb-qty-btn{
+  width: 54px;
+  height: 56px;
+  border: 0;
+  background: rgba(255,255,255,.55);
+  font-size: 30px;
+  font-weight: 900;
+  color: #000;
+}
+
+.bb-qty-val{
+  width: 78px;
+  height: 56px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 22px;
+  color: #000;
+  background: rgba(255,255,255,.20);
+}
+
+/* Bouton Ajouter */
+.bb-add-big{
+  flex: 1;
+  min-width: 320px;
+  height: 56px;
+  border-radius: 10px;
+  border: 3px solid rgba(255,255,255,.9);
+  background: rgba(255,255,255,.35);
+  color: #000;
+  font-weight: 900;
+  font-size: 28px;
+}
+
+/* Menu toggle */
+.bb-menu-toggle{
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.bb-menu-label{
+  font-weight: 900;
+  font-size: 28px;
+  color: #000;
+  text-transform: lowercase;
+}
+
+/* Switch */
+.bb-switch{
+  position: relative;
+  width: 62px;
+  height: 36px;
+  display: inline-block;
+}
+
+.bb-switch input{ display:none; }
+
+.bb-slider{
+  position:absolute;
+  inset:0;
+  border-radius: 999px;
+  background: rgba(255,255,255,.45);
+  border: 3px solid rgba(255,255,255,.95);
+  transition:.15s ease;
+}
+
+.bb-slider:after{
+  content:"";
+  width: 26px;
+  height: 26px;
+  background:#fff;
+  border-radius: 50%;
+  position:absolute;
+  top:50%;
+  left:7px;
+  transform: translateY(-50%);
+  transition:.15s ease;
+}
+
+.bb-switch input:checked + .bb-slider{
+  background: rgba(255,255,255,.70);
+}
+
+.bb-switch input:checked + .bb-slider:after{
+  left: 29px;
+}
+
+/* Pack info */
+.bb-pack{
+  margin-top: 12px;
+  color:#000;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 991.98px){
+  .bb-details-panel{
+    border-radius: 70px 70px 0 0;
+    padding: 64px 18px 20px;
+  }
+  .bb-add-big{ font-size: 22px; }
+  .bb-menu-label{ font-size: 22px; }
+}
+/* ===== Bouton Back (Retour catalogue) ===== */
+.bb-back-btn{
+  position: fixed;
+  top: 18px;
+  left: 18px;
+  z-index: 999;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 16px;
+  border-radius: 999px;
+
+  background: rgba(0,0,0,.55);
+  border: 2px solid rgba(255,255,255,.8);
+
+  color: #fff;
+  font-weight: 800;
+  font-size: 16px;
+  text-decoration: none;
+
+  backdrop-filter: blur(6px);
+}
+
+.bb-back-btn:hover{
+  text-decoration: none;
+  background: rgba(0,0,0,.75);
+}
+/* ===========================
+   PANIER
+   =========================== */
+
+.bb-panierpage{
+  background: var(--bb-bg);
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, sans-serif;
+}
+
+.bb-panier{
+  padding: 80px 18px 40px; /* laisse la place au bouton retour */
+}
+
+.bb-panier-wrap{
+  width: min(980px, 96vw);
+  margin: 0 auto;
+}
+
+.bb-panier-title{
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: clamp(28px, 3.5vw, 44px);
+  text-transform: lowercase;
+  margin-bottom: 22px;
+}
+
+/* Carte du panier */
+.bb-panier-card{
+  border: 3px solid rgba(255,255,255,.55);
+  border-radius: 22px;
+  background: rgba(255,255,255,.04);
+  padding: 18px;
+}
+
+.bb-panier-item{
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.bb-panier-img{
+  width: 160px;
+  height: 130px;
+  border-radius: 18px;
+  background: rgba(0,0,0,.35);
+  border: 2px solid rgba(255,255,255,.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+}
+
+.bb-panier-img img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 12px 14px rgba(0,0,0,.35));
+}
+
+.bb-panier-info{
+  flex: 1;
+  min-width: 220px;
+}
+
+.bb-panier-name{
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: 22px;
+  text-transform: lowercase;
+}
+
+.bb-panier-price{
+  color: rgba(255,255,255,.9);
+  font-weight: 800;
+  margin-top: 4px;
+}
+
+/* Quantité */
+.bb-panier-qty{
+  display: inline-flex;
+  align-items: center;
+  border: 3px solid rgba(255,255,255,.9);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(255,255,255,.10);
+  height: 52px;
+}
+
+.bb-panier-qty .bb-qty-btn{
+  width: 54px;
+  height: 52px;
+  border: 0;
+  background: rgba(255,255,255,.20);
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: 26px;
+}
+
+.bb-panier-qty .bb-qty-val{
+  width: 70px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: 20px;
+  background: rgba(255,255,255,.06);
+}
+
+/* Footer total + payer */
+.bb-panier-footer{
+  margin-top: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.bb-panier-total{
+  color: var(--bb-white);
+  font-weight: 800;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 18px;
+}
+
+.bb-panier-total strong{
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.bb-panier-pay{
+  min-width: 220px;
+  height: 54px;
+  border-radius: 14px;
+  border: 3px solid rgba(255,255,255,.9);
+  background: var(--bb-yellow);
+  color: var(--bb-white);
+  font-weight: 900;
+  font-size: 22px;
+}
+
+.bb-panier-pay:hover{
+  filter: brightness(.95);
+}
+.bb-clear-cart{
+  height: 44px;
+  padding: 0 16px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,.8);
+  background: rgba(255,255,255,.06);
+  color: var(--bb-white);
+  font-weight: 800;
+}
+
+.bb-panier-item-row{
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+  border-top: 1px solid rgba(255,255,255,.18);
+}
+
+.bb-panier-item-row:first-child{
+  border-top: 0;
+  padding-top: 0;
+}
+
+.bb-panier-sub{
+  margin-top: 4px;
+  color: rgba(255,255,255,.85);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.bb-remove{
+  margin-left: auto;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  border: 2px solid rgba(255,255,255,.7);
+  background: rgba(255,255,255,.06);
+  color: var(--bb-white);
+  font-weight: 900;
+}
+
+.bb-empty{
+  color: rgba(255,255,255,.9);
+  font-weight: 800;
+  padding: 18px 6px;
+}
+/* =========================
+   LOGIN (BRASIL BURGER)
+   ========================= */
+
+.bb-login-page{
+  min-height: 100vh;
+  background: #000;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  overflow: hidden;
+}
+
+.bb-login-left{
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.bb-login-burger{
+  width: 95%;
+  max-width: 900px;
+  height: auto;
+  object-fit: contain;
+  transform: translateX(-40px);
+}
+
+.bb-login-right{
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 40px 60px;
+  color: #fff;
+}
+
+.bb-login-title{
+  font-family: "Itim", system-ui, sans-serif;
+  font-size: 64px;
+  letter-spacing: 2px;
+  margin: 0 0 18px 0;
+  text-align: center;
+}
+
+.bb-login-toplink{
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 14px;
+  color: rgba(255,255,255,.65);
+}
+
+.bb-link-strong{
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  font-style: italic;
+}
+
+.bb-login-form{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.bb-input{
+  width: 100%;
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  height: 62px;
+  padding: 0 22px;
+  border-radius: 16px;
+  border: 2px solid rgba(255,255,255,.9);
+  background: #6f6320;
+  color: #fff;
+  font-size: 18px;
+  outline: none;
+}
+
+.bb-input::placeholder{
+  color: rgba(255,255,255,.75);
+}
+
+.bb-forgot{
+  max-width: 520px;
+  margin: -8px auto 4px auto;
+  text-align: right;
+}
+
+.bb-forgot a{
+  color: rgba(255,255,255,.6);
+  text-decoration: none;
+}
+
+.bb-or{
+  max-width: 520px;
+  margin: 12px auto 8px auto;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  color: rgba(255,255,255,.75);
+}
+
+.bb-or-line{
+  flex: 1;
+  height: 2px;
+  background: rgba(255,255,255,.85);
+}
+
+.bb-or-text{
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.bb-social{
+  max-width: 520px;
+  margin: 6px auto 10px auto;
+  display: flex;
+  justify-content: center;
+  gap: 22px;
+}
+
+.bb-social-btn{
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 2px solid rgba(255,255,255,.15);
+  background: transparent;
+  color: #fff;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.bb-login-submit{
+  width: 100%;
+  max-width: 520px;
+  margin: 10px auto 0 auto;
+  height: 64px;
+  border-radius: 18px;
+  border: 2px solid rgba(255,255,255,.9);
+  background: #f4d442;
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+/* responsive */
+@media (max-width: 992px){
+  .bb-login-page{ grid-template-columns: 1fr; }
+  .bb-login-left{ display:none; }
+  .bb-login-right{ padding: 30px 22px; }
+  .bb-login-title{ font-size: 46px; }
+}

@@ -1,0 +1,297 @@
+@page
+@model BrasilBurger.Pages.Client.DetailsProduitsModel
+@{
+    Layout = null;
+
+    // Pour l’instant on affiche un produit "statique"
+    // Plus tard (C#) : on utilisera QueryString ?type=...&id=...
+    var backUrl = "/Client/catalogueburger";
+}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Brasil Burger - Détails Produit</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Police (optionnel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Ton CSS principal -->
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+</head>
+
+<body class="bb-home bb-detailspage">
+
+    <!-- Bouton retour -->
+    <a href="@backUrl" class="bb-back-btn">← Retour</a>
+
+    <main class="bb-mock container-fluid">
+
+        <!-- NAV TOP -->
+        <header class="bb-details-nav d-flex justify-content-end gap-5 flex-wrap">
+            <a class="bb-nav-link" href="/Client/acceuil">Acceuil</a>
+            <a class="bb-nav-link" href="/Client/catalogueburger">Catalogue</a>
+            <a class="bb-nav-link" href="/Client/panier">Panier</a>
+            <a class="bb-nav-link" href="/Client/mescommandes">Commandes</a>
+        </header>
+
+        <!-- IMAGE (change selon sélection) -->
+        <div class="bb-details-hero">
+            <img src="~/images/burger.png" alt="Classic Burger" class="bb-details-burger" id="productImage">
+        </div>
+
+        <!-- PANEL JAUNE -->
+        <section class="bb-details-panel">
+            <h1 class="bb-details-title" id="productTitle">Classic Burger</h1>
+
+            <p class="bb-details-desc" id="productDesc">
+                New Burger Salad! Pain Artisanal, Viande 130g, Double cheddar, Salade, Tomate, Lanières de bacon,
+                Chips Maison, Sauce Maison, Prix: 6.000 fcs, Le 05 août: 3.000 fcs
+            </p>
+
+            <!-- MODES -->
+            <div class="bb-details-modes">
+                <label class="bb-mode">
+                    <input type="radio" name="mode" value="Livraison" checked>
+                    <div class="bb-mode-ui">
+                        <div class="bb-mode-pill"><span class="bb-mode-icon">✓</span></div>
+                        <div class="bb-mode-label">Livraison</div>
+                    </div>
+                </label>
+
+                <label class="bb-mode">
+                    <input type="radio" name="mode" value="Sur place">
+                    <div class="bb-mode-ui">
+                        <div class="bb-mode-pill"><span class="bb-mode-icon">⌂</span></div>
+                        <div class="bb-mode-label">sur place</div>
+                    </div>
+                </label>
+
+                <label class="bb-mode">
+                    <input type="radio" name="mode" value="Emporter">
+                    <div class="bb-mode-ui">
+                        <div class="bb-mode-pill"><span class="bb-mode-icon">⇪</span></div>
+                        <div class="bb-mode-label">emporter</div>
+                    </div>
+                </label>
+            </div>
+
+            <!-- EXTRAS -->
+            <div class="bb-extras">
+                <div class="row g-3">
+                    <div class="col-12 col-md-6">
+                        <label class="bb-extra-label" for="selectFrite">Frites</label>
+                        <select id="selectFrite" class="bb-extra-select"></select>
+                    </div>
+
+                    <div class="col-12 col-md-6">
+                        <label class="bb-extra-label" for="selectBoisson">Boisson</label>
+                        <select id="selectBoisson" class="bb-extra-select"></select>
+                    </div>
+                </div>
+
+                <div class="bb-summary mt-3" id="orderSummary"></div>
+            </div>
+
+            <!-- BARRE BAS -->
+            <div class="bb-details-bottom">
+                <!-- Quantité -->
+                <div class="bb-qty">
+                    <button type="button" class="bb-qty-btn" id="qtyPlus">+</button>
+                    <span class="bb-qty-val" id="qtyVal">1</span>
+                    <button type="button" class="bb-qty-btn" id="qtyMinus">-</button>
+                </div>
+
+                <!-- Ajouter (Design uniquement pour l’instant) -->
+                <button type="button" class="bb-add-big" id="btnAdd">
+                    Ajouter <span id="priceText">0</span> FCFA
+                </button>
+
+                <!-- Toggle Menu -->
+                <div class="bb-menu-toggle">
+                    <span class="bb-menu-label">menu</span>
+                    <label class="bb-switch">
+                        <input type="checkbox" id="toggleMenu">
+                        <span class="bb-slider"></span>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Pack info -->
+            <div class="bb-pack" id="packInfo"></div>
+        </section>
+    </main>
+
+    <!-- SCRIPT (design/visuel uniquement) -->
+    <script>
+        // ===== PRIX BASE =====
+        const PRICE_BURGER = 4500;
+
+        // ===== IMAGES (Razor -> chemins corrects) =====
+        const IMG_BURGER  = "/images/burger.png";
+        const IMG_FRITE   = "/images/frite.png";
+        const IMG_BOISSON = "/images/boisson.png";
+        const IMG_MENU    = "/images/menu.png";
+
+        // ===== CATALOGUES (mêmes produits que tes pages) =====
+        const FRITES = [
+            { id: "",  name: "Aucune",           price: 0 },
+            { id: "f1", name: "Frites classiques", price: 1500 },
+            { id: "f2", name: "Frites cheddar",    price: 2500 },
+            { id: "f3", name: "Frites épicées",    price: 2000 },
+            { id: "f4", name: "Frites grandes",    price: 2500 },
+            { id: "f5", name: "Frites sauce",      price: 2200 },
+            { id: "f6", name: "Frites fromage",    price: 2800 },
+        ];
+
+        const BOISSONS = [
+            { id: "",  name: "Aucune",          price: 0 },
+            { id: "b1", name: "Coca-Cola 33cl", price: 1000 },
+            { id: "b2", name: "Fanta 33cl",     price: 1000 },
+            { id: "b3", name: "Sprite 33cl",    price: 1000 },
+            { id: "b4", name: "Eau 50cl",       price: 500 },
+            { id: "b5", name: "Jus",            price: 1500 },
+            { id: "b6", name: "Milkshake",      price: 2500 },
+        ];
+
+        // ===== ETAT =====
+        let qty = 1;
+        let isMenu = false;
+
+        // ===== ELEMENTS =====
+        const qtyVal       = document.getElementById("qtyVal");
+        const qtyMinus     = document.getElementById("qtyMinus");
+        const qtyPlus      = document.getElementById("qtyPlus");
+        const toggleMenu   = document.getElementById("toggleMenu");
+        const priceText    = document.getElementById("priceText");
+        const packInfo     = document.getElementById("packInfo");
+        const orderSummary = document.getElementById("orderSummary");
+        const selectFrite  = document.getElementById("selectFrite");
+        const selectBoisson= document.getElementById("selectBoisson");
+        const productImage = document.getElementById("productImage");
+
+        // ===== HELPERS =====
+        function fillSelect(selectEl, items) {
+            selectEl.innerHTML = "";
+            items.forEach(item => {
+                const opt = document.createElement("option");
+                opt.value = item.id;
+                opt.textContent = item.price === 0
+                    ? item.name
+                    : `${item.name} - ${item.price.toLocaleString("fr-FR")} FCFA`;
+                selectEl.appendChild(opt);
+            });
+        }
+
+        function getSelected(selectEl, items) {
+            const id = selectEl.value;
+            return items.find(x => x.id === id) || items[0];
+        }
+
+        function updateImage(frite, boisson) {
+            // Priorité :
+            // Menu -> menu.png
+            // Boisson seule -> boisson.png
+            // Frite seule -> frite.png
+            // sinon burger.png
+            if (isMenu) {
+                productImage.src = IMG_MENU;
+                productImage.alt = "Menu";
+                return;
+            }
+
+            if (boisson.price > 0 && frite.price === 0) {
+                productImage.src = IMG_BOISSON;
+                productImage.alt = boisson.name;
+                return;
+            }
+
+            if (frite.price > 0 && boisson.price === 0) {
+                productImage.src = IMG_FRITE;
+                productImage.alt = frite.name;
+                return;
+            }
+
+            productImage.src = IMG_BURGER;
+            productImage.alt = "Classic Burger";
+        }
+
+        function render() {
+            const frite = getSelected(selectFrite, FRITES);
+            const boisson = getSelected(selectBoisson, BOISSONS);
+
+            // ✅ MENU CALCULÉ :
+            // Burger + Frite + Boisson (si menu ON)
+            // Burger + extras (si menu OFF)
+            const unitPrice = PRICE_BURGER + frite.price + boisson.price;
+            const total = unitPrice * qty;
+
+            priceText.textContent = total.toLocaleString("fr-FR");
+
+            packInfo.innerHTML = isMenu
+                ? "✅ Mode <b>Menu</b> : Burger + 🍟 Frites + 🥤 Boisson (calculé)"
+                : "✅ Mode <b>Burger</b> : Burger (extras possibles)";
+
+            updateImage(frite, boisson);
+
+            const frTxt = frite.price > 0 ? `🍟 ${frite.name}` : "🍟 Aucune frite";
+            const boTxt = boisson.price > 0 ? `🥤 ${boisson.name}` : "🥤 Aucune boisson";
+
+            let warn = "";
+            if (isMenu && (frite.price === 0 || boisson.price === 0)) {
+                warn = `<div class="bb-warn mt-2">⚠️ En mode <b>Menu</b>, choisis une frite et une boisson.</div>`;
+            }
+
+            orderSummary.innerHTML = `
+                <div>📦 <b>Résumé</b></div>
+                <div>🍔 Burger : Classic Burger</div>
+                <div>${frTxt}</div>
+                <div>${boTxt}</div>
+                <div class="mt-2">💰 Total : <b>${total.toLocaleString("fr-FR")} FCFA</b> (x${qty})</div>
+                ${warn}
+            `;
+        }
+
+        // ===== INIT =====
+        fillSelect(selectFrite, FRITES);
+        fillSelect(selectBoisson, BOISSONS);
+
+        // ===== EVENTS =====
+        qtyPlus.addEventListener("click", () => {
+            qty += 1;
+            qtyVal.textContent = qty;
+            render();
+        });
+
+        qtyMinus.addEventListener("click", () => {
+            qty = Math.max(1, qty - 1);
+            qtyVal.textContent = qty;
+            render();
+        });
+
+        toggleMenu.addEventListener("change", (e) => {
+            isMenu = e.target.checked;
+            render();
+        });
+
+        selectFrite.addEventListener("change", render);
+        selectBoisson.addEventListener("change", render);
+
+        // Bouton ajouter -> Design : on peut juste aller au panier (sans enregistrer)
+        document.getElementById("btnAdd").addEventListener("click", () => {
+            window.location.href = "/Client/panier";
+        });
+
+        render();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
