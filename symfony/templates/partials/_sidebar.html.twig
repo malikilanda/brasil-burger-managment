@@ -1,0 +1,27 @@
+<aside class="sidebar">
+    <div class="sidebar-top"></div>
+
+    <nav class="sidebar-menu">
+        <a class="sidebar-link {{ app.request.attributes.get('_route') == 'app_dashboard' ? 'active' : '' }}"
+           href="{{ path('app_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a class="sidebar-link {{ app.request.attributes.get('_route') == 'app_burger' ? 'active' : '' }}"
+           href="{{ path('app_burger') }}">
+            Burger
+        </a>
+
+        <a class="sidebar-link {{ app.request.attributes.get('_route') == 'app_menu' ? 'active' : '' }}"
+           href="{{ path('app_menu') }}">
+            Menu
+        </a>
+
+        <a class="sidebar-link {{ app.request.attributes.get('_route') == 'app_commande' ? 'active' : '' }}"
+           href="{{ path('app_commande') }}">
+            Commandes
+        </a>
+    </nav>
+
+    <div class="sidebar-bottom"></div>
+</aside>
