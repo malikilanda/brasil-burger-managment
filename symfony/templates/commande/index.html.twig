@@ -3,5 +3,33 @@
 {% block title %}Commandes{% endblock %}
 
 {% block body %}
-  <h1 class="page-title">Gestion Commandes</h1>
+<h1 class="page-title">Gestion Commandes</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Client</th>
+            <th>Montant</th>
+            <th>Etat</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Malik LO</td>
+            <td>4500 Fcfa</td>
+            <td><span class="badge badge-green">validée</span></td>
+            <td><span class="badge badge-green">livraison</span></td>
+            <td class="actions">
+                <a class="btn btn-red">Annuler</a>
+                <a class="btn btn-blue">Changer Etat</a>
+                <a class="btn btn-blue">Zone</a>
+                <a class="btn btn-blue">Affecter livreur</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}

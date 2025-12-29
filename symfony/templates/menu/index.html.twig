@@ -3,5 +3,33 @@
 {% block title %}Menu{% endblock %}
 
 {% block body %}
-  <h1 class="page-title">Gestion Menu</h1>
+<h1 class="page-title">Gestion Menu</h1>
+
+<a href="#" class="btn btn-add">Ajouter</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Burger</th>
+            <th>Boisson</th>
+            <th>Frites</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Combo Enfant</td>
+            <td>C. Burger</td>
+            <td>Coca-Cola</td>
+            <td>Frites</td>
+            <td>
+                <a class="btn btn-green">✎</a>
+                <a class="btn btn-red">🗑</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
 {% endblock %}

@@ -3,5 +3,32 @@
 {% block title %}Burger{% endblock %}
 
 {% block body %}
-  <h1 class="page-title">Gestion Burger</h1>
+<h1 class="page-title">Gestion Burger</h1>
+
+<a href="#" class="btn btn-add">Ajouter</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Prix</th>
+            <th>Image</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>Classic Burger</td>
+            <td>4500 Fcfa</td>
+            <td>🍔</td>
+            <td>
+                <a class="btn btn-green">modifier</a>
+                <a class="btn btn-red">archiver</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
 {% endblock %}
