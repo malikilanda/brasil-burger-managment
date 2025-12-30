@@ -3,25 +3,24 @@ FROM php:8.3-cli AS vendor
 
 WORKDIR /app
 
-# deps utiles pour composer
 RUN apt-get update && apt-get install -y \
     git unzip libzip-dev libicu-dev libpq-dev curl \
     && docker-php-ext-install intl zip pdo_pgsql \
     && rm -rf /var/lib/apt/lists/*
 
-# installer Composer (officiel)
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# copier uniquement les fichiers de deps d'abord (cache Docker)
+# deps d'abord pour cache
 COPY composer.json composer.lock symfony.lock* ./
 
-# installer vendors (prod)
+# IMPORTANT: pas de scripts ici (bin/console n'existe pas encore)
 RUN composer install \
     --no-dev \
     --no-interaction \
     --no-progress \
     --prefer-dist \
-    --optimize-autoloader
+    --optimize-autoloader \
+    --no-scripts
 
 # ====== STAGE 2: runtime Apache + PHP 8.3 ======
 FROM php:8.3-apache
@@ -34,13 +33,9 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
-# copier ton code
 COPY . .
-
-# copier vendor depuis stage 1
 COPY --from=vendor /app/vendor ./vendor
 
-# Apache -> /public
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
  && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
@@ -49,5 +44,8 @@ RUN mkdir -p var/cache var/log && chown -R www-data:www-data var
 
 ENV APP_ENV=prod
 ENV APP_DEBUG=0
+
+# optionnel: warmup cache (ne casse pas le build)
+RUN php bin/console cache:clear --env=prod --no-debug || true
 
 EXPOSE 80
