@@ -33,6 +33,16 @@ RUN apt-get update && apt-get install -y \
 
 WORKDIR /var/www/html
 
+# Autoriser .htaccess dans /public (Symfony routing)
+RUN printf '%s\n' \
+'<Directory /var/www/html/public>' \
+'    AllowOverride All' \
+'    Require all granted' \
+'</Directory>' \
+> /etc/apache2/conf-available/symfony.conf \
+&& a2enconf symfony
+
+
 COPY . .
 COPY --from=vendor /app/vendor ./vendor
 
