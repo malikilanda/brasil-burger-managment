@@ -1,37 +1,36 @@
-# Image PHP + Apache
-FROM php:8.3-apache
+# Image PHP avec Apache
+FROM php:8.2-apache
 
 # Activer mod_rewrite (Symfony)
 RUN a2enmod rewrite
 
-# Dépendances système
+# Installer dépendances système
 RUN apt-get update && apt-get install -y \
-    git unzip libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql \
-    && rm -rf /var/lib/apt/lists/*
+    git \
+    unzip \
+    libpq-dev \
+    && docker-php-ext-install pdo pdo_pgsql
 
 # Installer Composer
 COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
 
-# Dossier de travail
+# Définir le dossier de travail
 WORKDIR /var/www/html
 
 # Copier le projet
 COPY . .
 
-# Installer dépendances (prod)
+# Donner les droits
+RUN chown -R www-data:www-data /var/www/html
+
+# Installer les dépendances Symfony
 RUN composer install --no-dev --optimize-autoloader
 
-# Config Apache : document root = /public
-RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/apache2/sites-available/000-default.conf
+# Config Apache pour Symfony
+RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
 
-# Permissions (cache/log)
-RUN mkdir -p var/cache var/log && chown -R www-data:www-data var
+# Exposer le port
+EXPOSE 80
 
-# Port Render
-EXPOSE 10000
-
-# Apache écoute sur le port Render
-RUN sed -i 's/Listen 80/Listen 10000/' /etc/apache2/ports.conf
-
+# Lancer Apache
 CMD ["apache2-foreground"]
