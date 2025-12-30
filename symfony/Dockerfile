@@ -1,36 +1,49 @@
-# Image PHP avec Apache
-FROM php:8.2-apache
+# ====== STAGE 1: dependencies (Composer) ======
+FROM composer:2 AS vendor
 
-# Activer mod_rewrite (Symfony)
-RUN a2enmod rewrite
+WORKDIR /app
 
-# Installer dépendances système
+# Copie uniquement les fichiers nécessaires au install (cache Docker)
+COPY composer.json composer.lock symfony.lock* ./
+
+# Installer les vendors (sans dev)
+RUN composer install \
+    --no-dev \
+    --no-interaction \
+    --no-ansi \
+    --no-progress \
+    --prefer-dist \
+    --optimize-autoloader
+
+# ====== STAGE 2: runtime (PHP + Apache) ======
+FROM php:8.3-apache
+
+# Paquets + extensions nécessaires (Postgres + intl + zip)
 RUN apt-get update && apt-get install -y \
-    git \
-    unzip \
-    libpq-dev \
-    && docker-php-ext-install pdo pdo_pgsql
+    git unzip libpq-dev libicu-dev libzip-dev \
+    && docker-php-ext-install pdo_pgsql intl zip \
+    && a2enmod rewrite \
+    && rm -rf /var/lib/apt/lists/*
 
-# Installer Composer
-COPY --from=composer:2 /usr/bin/composer /usr/bin/composer
-
-# Définir le dossier de travail
 WORKDIR /var/www/html
 
-# Copier le projet
+# Copier l'app Symfony
 COPY . .
 
-# Donner les droits
-RUN chown -R www-data:www-data /var/www/html
+# Copier vendor depuis le stage Composer
+COPY --from=vendor /app/vendor ./vendor
 
-# Installer les dépendances Symfony
-RUN composer install --no-dev --optimize-autoloader
+# Apache doit pointer vers /public
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf \
+    && sed -ri -e 's!/var/www/!/var/www/html/public!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Config Apache pour Symfony
-RUN sed -i 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/000-default.conf
+# Permissions pour cache/log
+RUN mkdir -p var/cache var/log \
+    && chown -R www-data:www-data var
 
-# Exposer le port
+# Symfony en prod
+ENV APP_ENV=prod
+ENV APP_DEBUG=0
+
 EXPOSE 80
-
-# Lancer Apache
-CMD ["apache2-foreground"]
