@@ -3,33 +3,57 @@
 {% block title %}Menu{% endblock %}
 
 {% block body %}
-<h1 class="page-title">Gestion Menu</h1>
+<div class="layout">
 
-<a href="#" class="btn btn-add">Ajouter</a>
+    <main class="content">
+        <h1 class="page-title">Menu</h1>
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Burger</th>
-            <th>Boisson</th>
-            <th>Frites</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Combo Enfant</td>
-            <td>C. Burger</td>
-            <td>Coca-Cola</td>
-            <td>Frites</td>
-            <td>
-                <a class="btn btn-green">✎</a>
-                <a class="btn btn-red">🗑</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+        <div class="table-head">
+            <h2>Liste des menus</h2>
+            <a href="#" class="btn btn-add">+ Ajouter</a>
+        </div>
+
+        <div class="table-container">
+            <table class="bb-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Prix</th>
+                        <th>Image</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for m in menus %}
+                    <tr>
+                        <td>{{ m.id }}</td>
+                        <td>{{ m.name }}</td>
+                        <td>{{ m.price }} Fcfa</td>
+                        <td>
+                            {% if m.image %}
+                                <img src="{{ m.image }}" alt="menu" class="mini-img">
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td class="actions">
+                            <a href="#" class="btn btn-outline-blue">Modifier</a>
+                            {% if m.archived %}
+                                <span class="badge badge-ok">Archivé</span>
+                            {% else %}
+                                <a href="#" class="btn btn-outline-red">Archiver</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Aucun menu trouvé.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </main>
+</div>
 {% endblock %}

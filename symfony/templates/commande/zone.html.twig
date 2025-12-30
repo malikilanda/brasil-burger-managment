@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choisir Zone{% endblock %}
+
+{% block body %}
+<h1 class="page-title">Choisir Zone</h1>
+
+<form method="post" action="{{ path('commande_zone_save', {id: commandeId}) }}" class="form-box">
+    <label>Zone</label>
+    <select name="zone_id" required class="input">
+        {% for z in zones %}
+            <option value="{{ z.id }}">{{ z.nom }}</option>
+        {% endfor %}
+    </select>
+
+    <div style="margin-top:20px">
+        <button class="btn btn-yellow" type="submit">Enregistrer</button>
+        <a class="btn btn-outline-blue" href="{{ path('app_commande') }}">Retour</a>
+    </div>
+</form>
+{% endblock %}

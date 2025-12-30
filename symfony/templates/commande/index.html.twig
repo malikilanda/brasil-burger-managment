@@ -3,33 +3,65 @@
 {% block title %}Commandes{% endblock %}
 
 {% block body %}
-<h1 class="page-title">Gestion Commandes</h1>
+<div class="layout">
 
-<table class="table">
-    <thead>
+  <main class="content">
+    <h1 class="page-title">Commande</h1>
+
+    <div class="section-head">
+      <div class="section-title">Liste des commandes</div>
+      <a class="section-more" href="#">Voir plus</a>
+    </div>
+
+    <table class="bb-table">
+      <thead>
         <tr>
-            <th>ID</th>
-            <th>Client</th>
-            <th>Montant</th>
-            <th>Etat</th>
-            <th>Type</th>
-            <th>Actions</th>
+          <th>ID</th>
+          <th>Client</th>
+          <th>Téléphone</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Total</th>
+          <th>Date</th>
+          <th>Actions</th>
         </tr>
-    </thead>
-    <tbody>
+      </thead>
+
+      <tbody>
+      {% for c in commandes %}
         <tr>
-            <td>1</td>
-            <td>Malik LO</td>
-            <td>4500 Fcfa</td>
-            <td><span class="badge badge-green">validée</span></td>
-            <td><span class="badge badge-green">livraison</span></td>
-            <td class="actions">
-                <a class="btn btn-red">Annuler</a>
-                <a class="btn btn-blue">Changer Etat</a>
-                <a class="btn btn-blue">Zone</a>
-                <a class="btn btn-blue">Affecter livreur</a>
-            </td>
+          <td>{{ c.id }}</td>
+          <td>{{ c.client_nom|trim }}</td>
+          <td>{{ c.client_phone }}</td>
+          <td>
+            <span class="badge badge-type">{{ c.type }}</span>
+          </td>
+          <td>
+            {# Tu peux adapter les couleurs si tu veux #}
+            <span class="badge badge-ok">{{ c.status }}</span>
+          </td>
+          <td>{{ c.total_amount }} Fcfa</td>
+          <td>
+            {% if c.created_at %}
+              {{ c.created_at|date('Y-m-d H:i') }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td class="actions">
+            <a class="btn btn-outline-blue" href="#">Voir</a>
+            <a class="btn btn-outline-green" href="#">Valider</a>
+            <a class="btn btn-outline-red" href="#">Supprimer</a>
+          </td>
         </tr>
-    </tbody>
-</table>
+      {% else %}
+        <tr>
+          <td colspan="8">Aucune commande</td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+
+  </main>
+</div>
 {% endblock %}

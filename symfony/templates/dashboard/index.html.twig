@@ -3,68 +3,99 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-<h1 class="page-title">Dashboard</h1>
+<div class="layout">
 
-<div class="cards">
-    <div class="card">
-        <p class="card-label">Commandes en cours :</p>
-        <p class="card-value">05</p>
-    </div>
+    <main class="content">
+        <div class="topbar">
+            <div class="page-title">Dashboard</div>
+        </div>
 
-    <div class="card">
-        <p class="card-label">Validée :</p>
-        <p class="card-value">10</p>
-    </div>
+        <div class="cards">
+            <div class="card">
+                <div class="card-label">Total commandes</div>
+                <div class="card-value">{{ stats.totalOrders|default(0) }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">En attente / en cours</div>
+                <div class="card-value">{{ stats.pendingOrders|default(0) }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Terminées</div>
+                <div class="card-value">{{ stats.doneOrders|default(0) }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Recettes</div>
+                <div class="card-value">{{ stats.recettes|default(0)|number_format(0, '.', ' ') }} FCFA</div>
+            </div>
+        </div>
 
-    <div class="card">
-        <p class="card-label">Burgers vendus :</p>
-        <p class="card-value">20</p>
-    </div>
+        <div class="cards">
+            <div class="card">
+                <div class="card-label">Burgers</div>
+                <div class="card-value">{{ stats.totalBurgers|default(0) }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Menus</div>
+                <div class="card-value">{{ stats.totalMenus|default(0) }}</div>
+            </div>
+            <div class="card">
+                <div class="card-label">Compléments</div>
+                <div class="card-value">{{ stats.totalComplements|default(0) }}</div>
+            </div>
+        </div>
 
-    <div class="card">
-        <p class="card-label">Validée :</p>
-        <p class="card-value">10</p>
-    </div>
+        <div class="section">
+            <div class="section-head">
+                <div class="section-title">Commandes récentes</div>
+            </div>
 
-    <div class="card card-wide">
-        <p class="card-label">Recettes :</p>
-        <p class="card-value">100000 FCFA</p>
-    </div>
+            <div class="table-wrap">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client</th>
+                            <th>Téléphone</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th>Total</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for o in stats.recentOrders %}
+                            <tr>
+                                <td>#{{ o.id }}</td>
+                                <td>
+                                    {{ (o.client_firstname ~ ' ' ~ o.client_lastname)|trim ?: '—' }}
+                                </td>
+                                <td>{{ o.client_phone|default('—') }}</td>
+                                <td>{{ o.type|default('—') }}</td>
+                                <td>
+                                    <span class="badge">{{ o.status|default('—') }}</span>
+                                </td>
+                                <td>{{ (o.total_amount ?? 0)|number_format(0, '.', ' ') }} FCFA</td>
+                                <td>
+                                    {% if o.created_at %}
+                                        {{ o.created_at|date('d/m/Y H:i') }}
+                                    {% else %}
+                                        —
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" style="text-align:center; opacity:.7;">
+                                    Aucune commande trouvée.
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </main>
 </div>
-
-<div class="section-header">
-    <h2 class="section-title">Commandes recentes</h2>
-    <a href="/commande" class="see-more">Voir plus</a>
-</div>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Client</th>
-            <th>Montant</th>
-            <th>Etat</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Malik LO</td>
-            <td>4500 Fcfa</td>
-            <td><span class="badge badge-green">validée</span></td>
-        </tr>
-        <tr>
-            <td>2</td>
-            <td>Awa BA</td>
-            <td>4500 Fcfa</td>
-            <td><span class="badge badge-green">attente</span></td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <td>Oumou LO</td>
-            <td>4500 Fcfa</td>
-            <td><span class="badge badge-green">validée</span></td>
-        </tr>
-    </tbody>
-</table>
 {% endblock %}

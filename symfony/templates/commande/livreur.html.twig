@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Affecter Livreur{% endblock %}
+
+{% block body %}
+<h1 class="page-title">Affecter livreur</h1>
+
+<form method="post" action="{{ path('commande_livreur_save', {id: commandeId}) }}" class="form-box">
+    <label>Livreur</label>
+    <select name="livreur_id" required class="input">
+        {% for l in livreurs %}
+            <option value="{{ l.id }}">{{ l.nom_complet }}</option>
+        {% endfor %}
+    </select>
+
+    <div style="margin-top:20px">
+        <button class="btn btn-yellow" type="submit">Enregistrer</button>
+        <a class="btn btn-outline-blue" href="{{ path('app_commande') }}">Retour</a>
+    </div>
+</form>
+{% endblock %}

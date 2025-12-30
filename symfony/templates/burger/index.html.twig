@@ -1,34 +1,61 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Burger{% endblock %}
+{% block title %}Burgers{% endblock %}
 
 {% block body %}
-<h1 class="page-title">Gestion Burger</h1>
+<div class="layout">
+  <main class="content">
+    <h1 class="page-title">Gestion Burger</h1>
 
-<a href="#" class="btn btn-add">Ajouter</a>
+    <div class="table-head">
+      <h2>Liste des burgers</h2>
+      <a href="#" class="btn btn-yellow">Ajouter</a>
+    </div>
 
-<table class="table">
-    <thead>
-        <tr>
+    <div class="table-container">
+      <table class="bb-table">
+        <thead>
+          <tr>
             <th>ID</th>
             <th>Nom</th>
             <th>Prix</th>
             <th>Image</th>
             <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>1</td>
-            <td>Classic Burger</td>
-            <td>4500 Fcfa</td>
-            <td>🍔</td>
-            <td>
-                <a class="btn btn-green">modifier</a>
-                <a class="btn btn-red">archiver</a>
-            </td>
-        </tr>
-    </tbody>
-</table>
+          </tr>
+        </thead>
 
+        <tbody>
+        {% for b in burgers %}
+          <tr>
+            <td>{{ b.id }}</td>
+            <td>{{ b.name }}</td>
+            <td>{{ b.price }} Fcfa</td>
+            <td>
+              {% if b.image %}
+                <img src="{{ b.image }}" alt="burger" class="mini-img">
+              {% else %}
+                -
+              {% endif %}
+            </td>
+            <td class="actions">
+              <a href="#" class="btn btn-outline-blue">Modifier</a>
+
+              {% if b.archived %}
+                <span class="badge badge-ok">Archivé</span>
+              {% else %}
+                <a href="#" class="btn btn-outline-red">Archiver</a>
+              {% endif %}
+            </td>
+          </tr>
+        {% else %}
+          <tr>
+            <td colspan="5">Aucun burger trouvé.</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+  </main>
+</div>
 {% endblock %}

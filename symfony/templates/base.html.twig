@@ -1,20 +1,37 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Brasil Burger{% endblock %}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    {# CSS global #}
+    {# ton CSS #}
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
+
 <div class="layout">
-    {% include 'partials/_sidebar.html.twig' %}
+    <aside class="sidebar">
+        <div class="sidebar-top"></div>
+
+        <a class="sidebar-item {% if app.request.attributes.get('_route') == 'app_dashboard' %}active{% endif %}"
+           href="{{ path('app_dashboard') }}">Dashboard</a>
+
+        <a class="sidebar-item {% if app.request.attributes.get('_route') == 'app_burger' %}active{% endif %}"
+           href="{{ path('app_burger') }}">Burger</a>
+
+        <a class="sidebar-item {% if app.request.attributes.get('_route') == 'app_menu' %}active{% endif %}"
+           href="{{ path('app_menu') }}">Menu</a>
+
+        <a class="sidebar-item {% if app.request.attributes.get('_route') == 'app_commande' %}active{% endif %}"
+           href="{{ path('app_commande') }}">Commandes</a>
+
+        <div class="sidebar-bottom"></div>
+    </aside>
 
     <main class="content">
         {% block body %}{% endblock %}
     </main>
 </div>
+
 </body>
 </html>

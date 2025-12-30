@@ -2,17 +2,24 @@
 
 namespace App\Controller;
 
+use Doctrine\DBAL\Connection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-final class MenuController extends AbstractController
+class MenuController extends AbstractController
 {
     #[Route('/menu', name: 'app_menu')]
-    public function index(): Response
+    public function index(Connection $conn): Response
     {
+        $menus = $conn->fetchAllAssociative("
+            SELECT id, name, price, image, archived
+            FROM menus
+            ORDER BY id ASC
+        ");
+
         return $this->render('menu/index.html.twig', [
-            'controller_name' => 'MenuController',
+            'menus' => $menus,
         ]);
     }
 }
